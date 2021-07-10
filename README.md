@@ -2,8 +2,8 @@
 
 #### Comandos para arrancar el proyecto
 
-**yarn  start:** inicia la aplicacion en modo desarrollo.
-**yarn build: ** para generar el compilado.
+**yarn  start:** inicia la aplicacion en modo desarrollo
+**yarn build:** para generar el compilado.
 **yarn json-server:** para levantar la api para el CRUD.
 
 # Descripcion
