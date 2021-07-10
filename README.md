@@ -13,8 +13,8 @@
 # Imagenes
 
 
-![](./public/images/inicio.PNG)
+![](./public/images/Inicio.PNG)
 
 ![](./public/images/Nuevo.PNG)
 
-![](./public/images/Editar.PNG))
+![](./public/images/Editar.PNG)
