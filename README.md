@@ -1,6 +1,6 @@
-#CRUD REACT- REDUX - TYPESCRIPT - JSON-SERVER
+# CRUD REACT- REDUX - TYPESCRIPT - JSON-SERVER
 
-####Comandos para arrancar el proyecto
+#### Comandos para arrancar el proyecto
 
 **yarn  start:** inicia la aplicacion en modo desarrollo.
 **yarn build: ** para generar el compilado.
