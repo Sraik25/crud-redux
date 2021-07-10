@@ -13,6 +13,7 @@ const Products = () => {
     };
 
     getProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const products = useSelector((state: RootState) => state.products.products);

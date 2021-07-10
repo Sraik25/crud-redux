@@ -1,12 +1,4 @@
-import { IProduct } from '../actions/productActions';
-
-interface IProductState {
-  products: IProduct[];
-  error: boolean | null;
-  loading: boolean;
-  deleteProduct: number | null;
-  product: IProduct | null;
-}
+import { IProduct, IProductState } from '../dtos/ProductDto';
 
 const initialState: IProductState = {
   products: [],
@@ -26,7 +18,10 @@ export type ACTIONTYPE =
   | { type: 'DELETE_PRODUCT' }
   | { type: 'DELETE_PRODUCT_ERROR' }
   | { type: 'DELETE_PRODUCT_SUCCESS'; payload: number | undefined }
-  | { type: 'GET_ACTUAL_PRODUCT'; payload: IProduct };
+  | { type: 'GET_ACTUAL_PRODUCT'; payload: IProduct }
+  | { type: 'UPDATE_PRODUCT' }
+  | { type: 'UPDATE_PRODUCT_ERROR' }
+  | { type: 'UPDATE_PRODUCT_SUCCESS'; payload: IProduct };
 
 const productReducer = (
   state = initialState,
@@ -36,6 +31,7 @@ const productReducer = (
     case 'ADD_PRODUCT':
     case 'GET_PRODUCT':
     case 'DELETE_PRODUCT':
+    case 'UPDATE_PRODUCT':
       return {
         ...state,
         loading: true,
@@ -44,6 +40,7 @@ const productReducer = (
     case 'ADD_PRODUCT_ERROR':
     case 'GET_PRODUCT_ERROR':
     case 'DELETE_PRODUCT_ERROR':
+    case 'UPDATE_PRODUCT_ERROR':
       return {
         ...state,
         error: true,
@@ -76,6 +73,17 @@ const productReducer = (
       return {
         ...state,
         product: action.payload,
+      };
+
+    case 'UPDATE_PRODUCT_SUCCESS':
+      return {
+        ...state,
+        product: null,
+        products: state.products.map((product) =>
+          product.id === action.payload.id
+            ? (product = action.payload)
+            : product
+        ),
       };
 
     default:

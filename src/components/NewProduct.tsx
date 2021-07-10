@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
-import { createNewProductAction, IProduct } from '../actions/productActions';
+import { hiddenAlertAction, showAlertAction } from '../actions/alertActions';
+import { createNewProductAction } from '../actions/productActions';
+import { IProduct } from '../dtos/ProductDto';
 import store from '../store';
 
 export type RootState = ReturnType<typeof store.getState>;
@@ -11,6 +13,10 @@ const NewProduct = ({ history }: RouteComponentProps) => {
   const [price, setPrice] = useState(0);
 
   const loading = useSelector((state: RootState) => state.products.loading);
+  const alert = useSelector(
+    (state: RootState) => state.alertMessage.alertMessage
+  );
+
   const error = useSelector((state: RootState) => state.products.error);
 
   const dispatch = useDispatch();
@@ -22,9 +28,18 @@ const NewProduct = ({ history }: RouteComponentProps) => {
     e.preventDefault();
 
     if (nameProduct.trim() === '' || price <= 0) {
+      const response = {
+        msg: 'Ambos campos son obligatorios',
+        classes: 'alert alert-danger text-center text-uppercase pe',
+      };
+      dispatch(showAlertAction(response));
       return;
     }
+
+    dispatch(hiddenAlertAction());
+
     addproduct({ nameProduct, price });
+
     history.push('/');
   };
 
@@ -36,6 +51,9 @@ const NewProduct = ({ history }: RouteComponentProps) => {
             <h2 className="text-center mb-4 font-weight-bold">
               Agregar Nuevo Producto
             </h2>
+
+            {alert ? <p className={alert.classes}>{alert.msg}</p> : null}
+
             <form onSubmit={submitNewProduct}>
               <div className="form-group">
                 <label>Nombre Producto</label>

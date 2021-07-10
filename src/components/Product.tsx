@@ -1,12 +1,12 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
   deleteNewProductAction,
   getActualProductAction,
-  IProduct,
 } from '../actions/productActions';
 import Swal from 'sweetalert2';
+import { IProduct } from '../dtos/ProductDto';
 
 interface ProductProps {
   product: IProduct;

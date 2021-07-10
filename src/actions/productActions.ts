@@ -2,16 +2,11 @@ import { Dispatch } from 'react';
 import clientAxios from '../config/axios';
 import { ACTIONTYPE } from '../reducers/productsReducer';
 import Swal from 'sweetalert2';
-
-export interface IProduct {
-  id?: number;
-  nameProduct: string;
-  price: number;
-}
+import { IProduct } from '../dtos/ProductDto';
 
 export function createNewProductAction(product: IProduct) {
-  return async (dispatch: Dispatch<any>) => {
-    dispatch(addProduct());
+  return async (dispatch: Dispatch<ACTIONTYPE>) => {
+    dispatch( addProduct());
 
     try {
       await clientAxios.post('/productos', product);
@@ -122,4 +117,42 @@ export function getActualProductAction(product: IProduct) {
 const getActualProduct = (product: IProduct): ACTIONTYPE => ({
   type: 'GET_ACTUAL_PRODUCT',
   payload: product,
+});
+
+export function updateProductAction(product: IProduct) {
+  return async (dispatch: Dispatch<any>) => {
+    dispatch(updateProduct());
+
+    try {
+      await clientAxios.put(`/productos/${product.id}`, product);
+      dispatch(updateProductSuccess(product));
+
+      Swal.fire(
+        'Correct',
+        'El producto a sido eliminado correctamente',
+        'success'
+      );
+    } catch (error) {
+      console.log(error);
+      dispatch(updateProductError());
+      Swal.fire({
+        icon: 'error',
+        title: 'Hubo un error',
+        text: 'Hubo un error, intenta de nuevo',
+      });
+    }
+  };
+}
+
+const updateProduct = (): ACTIONTYPE => ({
+  type: 'UPDATE_PRODUCT',
+});
+
+const updateProductSuccess = (product: IProduct): ACTIONTYPE => ({
+  type: 'UPDATE_PRODUCT_SUCCESS',
+  payload: product,
+});
+
+const updateProductError = (): ACTIONTYPE => ({
+  type: 'UPDATE_PRODUCT_ERROR',
 });
